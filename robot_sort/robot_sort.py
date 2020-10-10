@@ -97,7 +97,52 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        # Plan:
+        # Pick up first number
+        # Turn robot light on
+        # Move robot right until robot locates smaller number than the held number
+        # Move robot once to the right, compare numbers, and replace that number with the held number
+        # If new number is greater than the recently placed number, move robot once to the right, compare numbers, and replace that number with the held number
+        # Else if new number is less than the recently placed number, move robot to the left, compare numbers until held number is greater than the number in front of it, and replace that number with the held number
+        # If an edge is reached - move robot in opposite direction until criteria are met
+        # If robot grabs edge value and travels from edge to edge, list is sorted
+
+        self.set_light_on()
+        self.swap_item()
+        self.move_right()
+        while self.light_is_on() == True:
+
+            if self.compare_item() == -1:
+                if self.can_move_right() == True:
+                    self.move_right()
+                    if self.compare_item() == 1:
+                        if self.can_move_right() == True:
+                            self.move_right()
+                            self.swap_item()
+                            if self.compare_item() == -1:
+                                self.move_right()
+                            elif self.compare_item() == 1:
+                                self.move_left()
+            elif self.compare_item() == 1:
+                if self.can_move_left() == True:
+                    self.move_left()
+                    if self.compare_item() == -1:
+                        if self.can_move_left() == True:
+                            self.move_left()
+                            self.swap_item()
+                            if self.compare_item() == 1:
+                                self.move_left()
+                            elif self.compare_item() == -1:
+                                self.move_right()
+            elif self.compare_item() == None:
+                if self.can_move_left() == True:
+                    self.move_left()
+                else:
+                    self.set_light_off()
+
+
+
+
 
 
 if __name__ == "__main__":
