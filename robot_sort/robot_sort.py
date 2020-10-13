@@ -92,6 +92,30 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def initial_moves(self):
+        while self.can_move_right() == True:
+            self.move_right()
+        self.swap_item()
+        while self.can_move_left() == True:
+            self.move_left()
+
+    def search_for_highest(self):
+        while self.compare_item() != None:
+            if self.compare_item() == -1:
+                self.swap_item()
+            self.move_right()
+
+    def found_position(self):
+        self.swap_item()
+        if self.can_move_left() == True:
+            self.move_left()
+            self.swap_item()
+            while self.can_move_left() == True:
+                self.move_left()
+            self.search_for_highest()
+        else:
+            self.set_light_on()
+
     def sort(self):
         """
         Sort the robot's list.
@@ -106,39 +130,51 @@ class SortingRobot:
         # Else if new number is less than the recently placed number, move robot to the left, compare numbers until held number is greater than the number in front of it, and replace that number with the held number
         # If an edge is reached - move robot in opposite direction until criteria are met
         # If robot grabs edge value and travels from edge to edge, list is sorted
+        #
+        # 1. Start by moving all the way to the right and picking up the last item in the list
+        # 2. Move all the way back left to the start of the list without comparing
+        # 3. Move right, comparing cards while moving to find largest item
+        # 4. When you reach the None value, swap the item with None
+        # 5. Move one space to the left, swap None for the item, and then repeat steps 2-4 until None is at the start of the list
+        # 6. Once None is at the start of the list, turn light on to indicate project finished
 
-        self.set_light_on()
-        self.swap_item()
-        self.move_right()
-        while self.light_is_on() == True:
+        self.initial_moves()
+        while self.light_is_on() == False:
+            self.search_for_highest()
+            self.found_position()
 
-            if self.compare_item() == -1:
-                if self.can_move_right() == True:
-                    self.move_right()
-                    if self.compare_item() == 1:
-                        if self.can_move_right() == True:
-                            self.move_right()
-                            self.swap_item()
-                            if self.compare_item() == -1:
-                                self.move_right()
-                            elif self.compare_item() == 1:
-                                self.move_left()
-            elif self.compare_item() == 1:
-                if self.can_move_left() == True:
-                    self.move_left()
-                    if self.compare_item() == -1:
-                        if self.can_move_left() == True:
-                            self.move_left()
-                            self.swap_item()
-                            if self.compare_item() == 1:
-                                self.move_left()
-                            elif self.compare_item() == -1:
-                                self.move_right()
-            elif self.compare_item() == None:
-                if self.can_move_left() == True:
-                    self.move_left()
-                else:
-                    self.set_light_off()
+        # self.set_light_on()
+        # self.swap_item()
+        # self.move_right()
+        # while self.light_is_on() == True:
+        #
+        #     if self.compare_item() == -1:
+        #         if self.can_move_right() == True:
+        #             self.move_right()
+        #             if self.compare_item() == 1:
+        #                 if self.can_move_right() == True:
+        #                     self.move_right()
+        #                     self.swap_item()
+        #                     if self.compare_item() == -1:
+        #                         self.move_right()
+        #                     elif self.compare_item() == 1:
+        #                         self.move_left()
+        #     elif self.compare_item() == 1:
+        #         if self.can_move_left() == True:
+        #             self.move_left()
+        #             if self.compare_item() == -1:
+        #                 if self.can_move_left() == True:
+        #                     self.move_left()
+        #                     self.swap_item()
+        #                     if self.compare_item() == 1:
+        #                         self.move_left()
+        #                     elif self.compare_item() == -1:
+        #                         self.move_right()
+        #     elif self.compare_item() == None:
+        #         if self.can_move_left() == True:
+        #             self.move_left()
+        #         else:
+        #             self.set_light_off()
 
 
 

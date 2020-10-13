@@ -4,7 +4,7 @@
 
 a) I believe this snippet runs at quadratic time (O(n^2)) because the time to run this program increases exponentially as the input increases. i.e. an input size of 4 may seem fairly harmless, but if we increase input to any sort of large number in the 100s or 1,000s even, we would see this program run for much, much more time.
 
-b) I believe this snippet runs at linear time (O(n)) because the time to run this program would increase steadily as input size grows. i.e. the inside while loop runs more times the larger the input.
+b) I believe this snippet runs at linear time O(n log(n) because the time to run this program would increase steadily as input size grows. i.e. the inside while loop runs more times the larger the input.
 
 c) I believe this snippet runs at linear time (O(n)) because the time to run this program would increase steadily as input size grows. i.e. the greater the number of 'bunnies', the greater the amount of times bunnyEars() is recursively called.
 
